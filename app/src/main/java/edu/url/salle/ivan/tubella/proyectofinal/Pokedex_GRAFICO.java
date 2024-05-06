@@ -14,7 +14,8 @@ public class Pokedex_GRAFICO extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pokedex_grafico);
-        ImageView imageView = null;
+
+        ImageView imageView = findViewById(R.id.textureView1);
         Picasso.get().load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png").into(imageView);
 
     }

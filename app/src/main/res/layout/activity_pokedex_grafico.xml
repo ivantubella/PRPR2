@@ -11,9 +11,9 @@
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:background="@color/azul"
-        android:src="@drawable/Image_Pokemon"
         tools:layout_editor_absoluteX="5dp"
-        tools:layout_editor_absoluteY="59dp" />
+        tools:layout_editor_absoluteY="59dp"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/Name"
