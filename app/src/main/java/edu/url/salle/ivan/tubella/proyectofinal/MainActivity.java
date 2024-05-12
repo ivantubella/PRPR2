@@ -10,12 +10,13 @@ import android.os.Bundle;
 import edu.url.salle.ivan.tubella.proyectofinal.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
-
+    private Trainer trainer;
     ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //this.trainer = new Trainer();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         replaceFragment(new PokeBallFragment());
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
             if (item.getItemId() == R.id.pokeball) {
                 replaceFragment(new PokeBallFragment());
             } else if (item.getItemId() == R.id.trainer) {
-                replaceFragment(new TrainerFragment());
+                replaceFragment(new TrainerFragment(/*this.trainer*/));
             } else if (item.getItemId() == R.id.store) {
                 replaceFragment(new StoreFragment());
             }
