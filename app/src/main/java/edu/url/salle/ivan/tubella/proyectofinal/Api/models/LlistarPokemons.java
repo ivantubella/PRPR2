@@ -1,4 +1,4 @@
-package edu.url.salle.ivan.tubella.proyectofinal.Api;
+package edu.url.salle.ivan.tubella.proyectofinal.Api.models;
 
 import java.util.ArrayList;
 
