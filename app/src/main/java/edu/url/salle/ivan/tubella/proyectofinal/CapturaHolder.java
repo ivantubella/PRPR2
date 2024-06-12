@@ -1,6 +1,5 @@
 package edu.url.salle.ivan.tubella.proyectofinal;
 
-import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +14,15 @@ public class CapturaHolder extends RecyclerView.ViewHolder implements View.OnCli
     private TextView tvName;
     private ImageView ivPokemon;
     private ImageView ivPokeball;
-    private Activity activity;
+    private CapturaAdapter adapter;
 
-    public CapturaHolder(LayoutInflater inflater, ViewGroup parent, Activity activity) {
+    public CapturaHolder(LayoutInflater inflater, ViewGroup parent, CapturaAdapter adapter) {
         super(inflater.inflate(R.layout.captura_list_view, parent, false));
         tvName = (TextView) itemView.findViewById(R.id.nomPokemon);
         ivPokeball = (ImageView)itemView.findViewById(R.id.ivPokeballCapturat);
         ivPokemon = (ImageView)itemView.findViewById(R.id.ivPokemon);
 
-        this.activity = activity;
+        this.adapter = adapter;
         itemView.setOnClickListener(this);
     }
 
@@ -36,7 +35,12 @@ public class CapturaHolder extends RecyclerView.ViewHolder implements View.OnCli
 
     @Override
     public void onClick(View view) {
-        Toast.makeText(activity, tvName.getText() + " apretat!", Toast.LENGTH_SHORT).show();
+        int position = getAdapterPosition();
+        if (position != RecyclerView.NO_POSITION) {
+            //Toast.makeText(view.getContext(), tvName.getText() + " apretat!", Toast.LENGTH_SHORT).show();
+            adapter.removeItem(position);
+        }
     }
+
 
 }

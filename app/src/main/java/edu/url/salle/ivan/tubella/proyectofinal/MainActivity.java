@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
+import edu.url.salle.ivan.tubella.proyectofinal.Trainer.Trainer;
 import edu.url.salle.ivan.tubella.proyectofinal.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -50,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
         Log.d("TAG NAME ON STOP", this.trainer.getName());
         actualizaSharedPreferences();
-        //Log.d(TAG, "onStop() called");
     }
 
     private void actualizaSharedPreferences() {
@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String json = gson.toJson(this.trainer);
         Log.d("TAG JSON SHARED", json);
+        editor.clear();
         editor.putString("Trainer", json);
         editor.apply(); //ASYNC
         //editor.commit();//SYNC --> puede llegar a parar la ejecución de la UI

@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import edu.url.salle.ivan.tubella.proyectofinal.Trainer.Trainer;
+
 public class PokeBallFragment extends Fragment {
 
     private Trainer trainer;

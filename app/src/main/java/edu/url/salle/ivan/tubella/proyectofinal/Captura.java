@@ -2,26 +2,31 @@ package edu.url.salle.ivan.tubella.proyectofinal;
 
 public class Captura {
     private String pokemon;
-    private String pokeball;
+    private String pokemonUrl;
+    private String pokeballUrl;
 
-    public Captura(String pokemon, String pokeball) {
+    public Captura(String pokemon,String pokemonUrl, String pokeballUrl) {
         this.pokemon = pokemon;
-        this.pokeball = pokeball;
+        this.pokeballUrl = pokeballUrl;
+        this.pokemonUrl = pokemonUrl;
     }
 
     public String getPokemon() {
         return pokemon;
     }
-
     public void setPokemon(String pokemon) {
         this.pokemon = pokemon;
     }
-
-    public String getPokeball() {
-        return pokeball;
+    public String getPokeballUrl() {
+        return pokeballUrl;
     }
-
-    public void setPokeball(String pokeball) {
-        this.pokeball = pokeball;
+    public void setPokeballUrl(String pokeball) {
+        this.pokeballUrl = pokeball;
+    }
+    public String getPokemonUrl() {
+        return pokemonUrl;
+    }
+    public void setPokemonUrl(String pokemonUrl) {
+        this.pokemonUrl = pokemonUrl;
     }
 }
