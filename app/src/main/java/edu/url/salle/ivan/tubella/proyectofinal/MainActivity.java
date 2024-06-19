@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import edu.url.salle.ivan.tubella.proyectofinal.Trainer;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,19 +15,26 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
-import edu.url.salle.ivan.tubella.proyectofinal.Trainer.Trainer;
+import java.util.ArrayList;
+
 import edu.url.salle.ivan.tubella.proyectofinal.databinding.ActivityMainBinding;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     private Trainer trainer;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragment(new PokeBallFragment(trainer));
 
         //CARREGAR SHARED PREFERENCES, COMPROBAR SI NULL
         trainer = Trainer.getInstance();
@@ -33,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
             Gson gson = new Gson();
             trainer = gson.fromJson(jsonTrainer, Trainer.class);
         }
+
+        replaceFragment(new PokeBallFragment(trainer));
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.pokeball) {
