@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import edu.url.salle.ivan.tubella.proyectofinal.Trainer;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -16,7 +17,6 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-import edu.url.salle.ivan.tubella.proyectofinal.Trainer.Trainer;
 import edu.url.salle.ivan.tubella.proyectofinal.databinding.ActivityMainBinding;
 import retrofit2.Call;
 import retrofit2.Callback;
