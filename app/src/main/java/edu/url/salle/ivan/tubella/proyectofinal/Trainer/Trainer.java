@@ -1,9 +1,6 @@
 package edu.url.salle.ivan.tubella.proyectofinal.Trainer;
 
-import android.util.Log;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import edu.url.salle.ivan.tubella.proyectofinal.Captura;
 
@@ -12,7 +9,7 @@ public class Trainer {
     private String name;
     private int money;
     private ArrayList<String> items; //TODO Cambiar a ArrayList<Pokeball> items
-    private ArrayList<Captura> pokemons; //TODO Cambiar a ArrayList<Pokemon> items o ArrayList<Captura> items
+    private ArrayList<Captura> pokemons;
     private boolean canCapture;
 
     public static Trainer getInstance() {
