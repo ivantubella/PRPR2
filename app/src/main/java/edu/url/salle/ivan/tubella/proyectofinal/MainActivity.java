@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
+import edu.url.salle.ivan.tubella.proyectofinal.Trainer.Trainer;
 import edu.url.salle.ivan.tubella.proyectofinal.databinding.ActivityMainBinding;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
         Log.d("TAG NAME ON STOP", this.trainer.getName());
         actualizaSharedPreferences();
-        //Log.d(TAG, "onStop() called");
     }
 
     private void actualizaSharedPreferences() {
@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String json = gson.toJson(this.trainer);
         Log.d("TAG JSON SHARED", json);
+        editor.clear();
         editor.putString("Trainer", json);
         editor.apply(); //ASYNC
         //editor.commit();//SYNC --> puede llegar a parar la ejecución de la UI
