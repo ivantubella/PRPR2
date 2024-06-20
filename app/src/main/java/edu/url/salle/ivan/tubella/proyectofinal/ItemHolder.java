@@ -16,16 +16,14 @@ public class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickL
     private TextView tvName;
     private TextView tvNum;
     private ImageView ivPokeball;
+    private ItemAdapter itemAdapter;
 
-    private Activity activity;
-
-    public ItemHolder(LayoutInflater inflater, ViewGroup parent, Activity
-            activity) {
+    public ItemHolder(LayoutInflater inflater, ViewGroup parent, ItemAdapter itemAdapter) {
         super(inflater.inflate(R.layout.item_list_view, parent, false));
         tvName = (TextView) itemView.findViewById(R.id.nomPokeball);
         tvNum = (TextView)itemView.findViewById(R.id.numPokeball);
         ivPokeball = (ImageView)itemView.findViewById(R.id.ivPokeball);
-        this.activity = activity;
+        this.itemAdapter=itemAdapter;
         itemView.setOnClickListener(this);
     }
 
@@ -38,7 +36,12 @@ public class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        Toast.makeText(activity, tvName.getText() + " apretat!", Toast.LENGTH_SHORT).show();
+        int position = getAdapterPosition();
+        if (position != RecyclerView.NO_POSITION) {
+            //Toast.makeText(view.getContext(), tvName.getText() + " apretat!", Toast.LENGTH_SHORT).show();
+            itemAdapter.removeItem(position,tvName.getText().toString());
+        }
     }
+
 
 }

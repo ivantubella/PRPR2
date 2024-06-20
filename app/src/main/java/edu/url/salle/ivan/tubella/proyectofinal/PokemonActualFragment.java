@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -28,6 +29,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import edu.url.salle.ivan.tubella.proyectofinal.Trainer.Trainer;
 
 public class PokemonActualFragment extends AppCompatActivity {
     private Retrofit retrofit;
@@ -35,6 +37,7 @@ public class PokemonActualFragment extends AppCompatActivity {
     private Trainer trainer;
     private String pokemon_name;
     private Button atras;
+    private ItemAdapter itemAdapter;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +48,10 @@ public class PokemonActualFragment extends AppCompatActivity {
         this.trainer = intent.getParcelableExtra("TRAINER");
         this.pokemon_name = intent.getStringExtra("POKEMON");
 
+        recyclerView=findViewById(R.id.cazar_pokemon);
+        findViewById(R.id.cazar_pokemon);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         //boton patras
         atras = findViewById(R.id.button_back);
         atras.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +59,7 @@ public class PokemonActualFragment extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent backup = new Intent(PokemonActualFragment.this, MainActivity.class);
+                backup.putExtra("ID_TRAINER",trainer);
                 setResult(RESULT_OK,backup);
                 finish();
 
@@ -75,6 +83,7 @@ public class PokemonActualFragment extends AppCompatActivity {
     }
 
     private void obtenerDatosGenerales(){
+
         PedirDatosPokemonEspecificos especifico = retrofit.create(PedirDatosPokemonEspecificos.class);
         Call<PokemonRespuestaEspecifico> datospokemon = especifico.obteneDatosPokemon(pokemon_name);
         datospokemon.enqueue(new Callback<PokemonRespuestaEspecifico>() {
@@ -125,7 +134,6 @@ public class PokemonActualFragment extends AppCompatActivity {
                     textView.setText("HP:"+stats.get(0).getBase_stat()+"  Atq:"+stats.get(1).getBase_stat()+"   Def:"+stats.get(2).getBase_stat()+
                             "\nSp-Atq:"+stats.get(3).getBase_stat()+"   Sp-def:"+stats.get(4).getBase_stat()+"   Spd:"+stats.get(0).getBase_stat());
                     //img
-
                     Glide.with(PokemonActualFragment.this)
                             .load(pokemonRespuestaespecifico.getSprites().getFront_default())
                             .centerCrop()
@@ -138,14 +146,16 @@ public class PokemonActualFragment extends AppCompatActivity {
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into((ImageView) findViewById(R.id.fotoPokemonView2));
 
+
+                    ArrayList<String> lItem =trainer.getItems();
+                    itemAdapter = new ItemAdapter(lItem,PokemonActualFragment.this,trainer,true,pokemon_name);
+                    recyclerView.setAdapter(itemAdapter);
+
                 }
             }
             @Override
             public void onFailure(Call<PokemonRespuestaEspecifico> call, Throwable t) {
-
                 Log.e("err", "Error: " + t.getMessage());
-
-
             }
         });
     }

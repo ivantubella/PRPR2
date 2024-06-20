@@ -1,16 +1,44 @@
 package edu.url.salle.ivan.tubella.proyectofinal.Trainer;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 
 import edu.url.salle.ivan.tubella.proyectofinal.Captura;
 
-public class Trainer {
+public class Trainer implements Parcelable {
     private static Trainer sTrainer;
     private String name;
     private int money;
     private ArrayList<String> items; //TODO Cambiar a ArrayList<Pokeball> items
     private ArrayList<Captura> pokemons;
     private boolean canCapture;
+
+    protected Trainer(Parcel in) {
+        name = in.readString();
+        money = in.readInt();
+        items = in.createStringArrayList();
+        pokemons = in.createTypedArrayList(Captura.CREATOR);
+
+
+
+    }
+
+    public static final Creator<Trainer> CREATOR = new Creator<Trainer>() {
+        @Override
+        public Trainer createFromParcel(Parcel in) {
+            return new Trainer(in);
+        }
+            //return new Trainer(in);
+
+        @Override
+        public Trainer[] newArray(int size) {
+            return new Trainer[size];
+        }
+    };
 
     public static Trainer getInstance() {
         if (sTrainer == null) {
@@ -53,8 +81,8 @@ public class Trainer {
     public void addItem(String item) {
         this.items.add(item);
     }
-    public void eraseItem() {
-        //this.items.remove();
+    public void eraseItem(int index) {
+            this.items.remove(index);
     }
     public ArrayList<Captura> getPokemons() {
         return pokemons;
@@ -92,5 +120,18 @@ public class Trainer {
     }
     public void updateCanCapture(boolean value) {
         this.canCapture = value;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeInt(money);
+        dest.writeStringList(items);
+        dest.writeList(pokemons);
     }
 }

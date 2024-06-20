@@ -14,8 +14,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-
 import edu.url.salle.ivan.tubella.proyectofinal.Trainer.Trainer;
+
 public class TrainerFragment extends Fragment {
     private Trainer trainer;
     public RecyclerView itemsRecyclerView;
@@ -80,7 +80,7 @@ public class TrainerFragment extends Fragment {
         /*for (int i = 0; i <= 10; i++) {
             lItem.add(Integer.toString(i));
         }*/
-        itemAdapter = new ItemAdapter(lItem, getActivity());
+        itemAdapter = new ItemAdapter(lItem, getActivity(),trainer,false);
         //li diem a la nostra recyclerview que aquest es el seu adapter
         itemsRecyclerView.setAdapter(itemAdapter);
 

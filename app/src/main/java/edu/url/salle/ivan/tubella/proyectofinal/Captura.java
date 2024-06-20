@@ -1,15 +1,35 @@
 package edu.url.salle.ivan.tubella.proyectofinal;
 
-public class Captura {
-    private String pokemon;
-    private String pokemonUrl;
-    private String pokeballUrl;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-    public Captura(String pokemon,String pokemonUrl, String pokeballUrl) {
+import androidx.annotation.NonNull;
+
+public class Captura implements Parcelable {
+    private String pokemon;
+    private String pokeball;
+
+    public Captura(String pokemon,String pokeball) {
         this.pokemon = pokemon;
-        this.pokeballUrl = pokeballUrl;
-        this.pokemonUrl = pokemonUrl;
+        this.pokeball = pokeball;
     }
+
+    protected Captura(Parcel in) {
+        pokemon = in.readString();
+        pokeball = in.readString();
+    }
+
+    public static final Creator<Captura> CREATOR = new Creator<Captura>() {
+        @Override
+        public Captura createFromParcel(Parcel in) {
+            return new Captura(in);
+        }
+
+        @Override
+        public Captura[] newArray(int size) {
+            return new Captura[size];
+        }
+    };
 
     public String getPokemon() {
         return pokemon;
@@ -17,16 +37,23 @@ public class Captura {
     public void setPokemon(String pokemon) {
         this.pokemon = pokemon;
     }
-    public String getPokeballUrl() {
-        return pokeballUrl;
+
+    public String getPokeball() {
+        return pokeball;
     }
-    public void setPokeballUrl(String pokeball) {
-        this.pokeballUrl = pokeball;
+
+    public void setPokeball(String pokeball) {
+        this.pokeball = pokeball;
     }
-    public String getPokemonUrl() {
-        return pokemonUrl;
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
-    public void setPokemonUrl(String pokemonUrl) {
-        this.pokemonUrl = pokemonUrl;
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(pokemon);
+        dest.writeString(pokeball);
     }
 }

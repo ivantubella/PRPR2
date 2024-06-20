@@ -2,6 +2,7 @@ package edu.url.salle.ivan.tubella.proyectofinal;
 
 import static androidx.core.app.ActivityCompat.startActivityForResult;
 import static androidx.core.content.ContextCompat.startActivity;
+import edu.url.salle.ivan.tubella.proyectofinal.Trainer.Trainer;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
+import edu.url.salle.ivan.tubella.proyectofinal.Trainer.Trainer;
 
 public class PokemonGeneralAdaptador extends RecyclerView.Adapter<PokemonGeneralAdaptador.ViewHolder> {
     private ArrayList<PokemonGeneral> dataset;

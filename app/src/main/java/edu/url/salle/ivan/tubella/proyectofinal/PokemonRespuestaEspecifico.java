@@ -10,6 +10,7 @@ public class PokemonRespuestaEspecifico {
     private ArrayList<Stats> stats;
     private ArrayList<Types> types;
     private Sprites sprites;
+    private boolean isCaptured;
 
 
     public ArrayList<Abilidades> getAbilities() {

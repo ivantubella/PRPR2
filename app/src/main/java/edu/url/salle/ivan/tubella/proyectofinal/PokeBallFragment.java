@@ -2,6 +2,7 @@ package edu.url.salle.ivan.tubella.proyectofinal;
 
 import android.content.Intent;
 import android.os.Bundle;
+import edu.url.salle.ivan.tubella.proyectofinal.Trainer.Trainer;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
