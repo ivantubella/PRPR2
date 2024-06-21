@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,13 +32,22 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import edu.url.salle.ivan.tubella.proyectofinal.Trainer.Trainer;
 
-public class PokemonActualFragment extends AppCompatActivity {
+public class PokemonActualFragment extends Fragment {
     private Retrofit retrofit;
     private RecyclerView recyclerView;
     private Trainer trainer;
     private String pokemon_name;
-    private Button atras;
     private ItemAdapter itemAdapter;
+    private FragmentManager fm;
+
+
+    public PokemonActualFragment(Trainer trainer, FragmentManager fm, String pokemon_name) {
+        this.trainer=trainer;
+        this.fm=fm;
+        this.pokemon_name=pokemon_name;
+
+    }
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,19 +62,6 @@ public class PokemonActualFragment extends AppCompatActivity {
         findViewById(R.id.cazar_pokemon);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        //boton patras
-        atras = findViewById(R.id.button_back);
-        atras.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent backup = new Intent(PokemonActualFragment.this, MainActivity.class);
-                backup.putExtra("ID_TRAINER",trainer);
-                setResult(RESULT_OK,backup);
-                finish();
-
-            }
-        });
 
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://pokeapi.co/api/v2/")
@@ -73,13 +70,6 @@ public class PokemonActualFragment extends AppCompatActivity {
 
 
         obtenerDatosGenerales();
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent data = new Intent(); //Creem un Intent que anomenem data.
-        setResult(RESULT_OK, data); //RESULT_OK --> Codi estàndard per informar l'activitat que ha aixecat l'activitat actual que s'ha executat correctament    data -->  L'Intent que hem creat, per informar a la MainActivity si l’usuari quin ha sigut lúltim animal mirat
-        super.onBackPressed();
     }
 
     private void obtenerDatosGenerales(){

@@ -26,11 +26,13 @@ public class PokemonGeneralAdaptador extends RecyclerView.Adapter<PokemonGeneral
     private ArrayList<PokemonGeneral> dataset;
     private Context context;
     private Trainer trainer;
+    private FragmentManager fm;
 
-    public PokemonGeneralAdaptador(Context context,Trainer trainer) {
+    public PokemonGeneralAdaptador(Context context,Trainer trainer,FragmentManager fm) {
         this.context = context;
         dataset = new ArrayList<>();
         this.trainer=trainer;
+        this.fm=fm;
 
     }
 
@@ -79,14 +81,12 @@ public class PokemonGeneralAdaptador extends RecyclerView.Adapter<PokemonGeneral
 
         @Override
         public void onClick(View view) {
-            int position = getAdapterPosition();
-            if (position != RecyclerView.NO_POSITION) {
 
-                Intent intent = new Intent(view.getContext(), PokemonActualFragment.class);
-                intent.putExtra("TRAINER", trainer);
-                intent.putExtra("POKEMON",nombreTextView.getText().toString());
-                view.getContext().startActivity(intent);
-            }
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.frame_layout, new PokemonActualFragment(trainer,fm,nombreTextView.getText().toString()));
+            ft.commit();
+
+
         }
     }
 }

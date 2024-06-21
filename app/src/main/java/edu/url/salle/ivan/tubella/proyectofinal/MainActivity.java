@@ -39,11 +39,11 @@ public class MainActivity extends AppCompatActivity {
             trainer = gson.fromJson(jsonTrainer, Trainer.class);
         }
 
-        replaceFragment(new PokeBallFragment(trainer));
+        replaceFragment(new PokeBallFragment(trainer,getSupportFragmentManager()));
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.pokeball) {
-                replaceFragment(new PokeBallFragment(trainer));
+                replaceFragment(new PokeBallFragment(trainer, getSupportFragmentManager()));
             } else if (item.getItemId() == R.id.trainer) {
                 replaceFragment(new TrainerFragment(trainer));
             } else if (item.getItemId() == R.id.store) {

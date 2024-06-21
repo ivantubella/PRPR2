@@ -6,6 +6,7 @@ import edu.url.salle.ivan.tubella.proyectofinal.Trainer.Trainer;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,8 +31,11 @@ public class PokeBallFragment extends Fragment{
     private Trainer trainer;
     private int max;
     private boolean aptoParaCargar;
-    public PokeBallFragment(Trainer trainer) {
+    private FragmentManager fm;
+
+    public PokeBallFragment(Trainer trainer, FragmentManager fm) {
         this.trainer = trainer;
+        this.fm = fm;
     }
 
     @Override
@@ -46,7 +50,7 @@ public class PokeBallFragment extends Fragment{
         View v = inflater.inflate(R.layout.fragment_poke_ball, container, false);
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
 
-        pokemonGeneralAdaptador = new PokemonGeneralAdaptador(getContext(),trainer);
+        pokemonGeneralAdaptador = new PokemonGeneralAdaptador(getContext(),trainer,fm);
 
         recyclerView.setAdapter(pokemonGeneralAdaptador);
         recyclerView.setHasFixedSize(true);
