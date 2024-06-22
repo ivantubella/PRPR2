@@ -7,6 +7,7 @@ import edu.url.salle.ivan.tubella.proyectofinal.Trainer.Trainer;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 
@@ -32,6 +34,8 @@ public class PokeBallFragment extends Fragment{
     private int max;
     private boolean aptoParaCargar;
     private FragmentManager fm;
+    private EditText editText;
+
 
     public PokeBallFragment(Trainer trainer, FragmentManager fm) {
         this.trainer = trainer;
@@ -47,7 +51,24 @@ public class PokeBallFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
+
         View v = inflater.inflate(R.layout.fragment_poke_ball, container, false);
+
+        this.editText = (EditText) v.findViewById(R.id.buscador);
+        this.editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if(!hasFocus) { //user just left it, tapped outside
+                    String PokemonName = editText.getText().toString();
+
+                    FragmentTransaction ft = fm.beginTransaction();
+                    ft.replace(R.id.frame_layout, new PokemonActualFragment(trainer,fm,PokemonName));
+                    ft.commit();
+
+                }
+            }
+        });
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
 
         pokemonGeneralAdaptador = new PokemonGeneralAdaptador(getContext(),trainer,fm);

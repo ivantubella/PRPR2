@@ -20,7 +20,7 @@ import edu.url.salle.ivan.tubella.proyectofinal.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
-    private Trainer trainer = Trainer.getInstance();
+    private Trainer trainer;
 
     private static final int ID_TRAINER=1;
 
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         //CARREGAR SHARED PREFERENCES, COMPROBAR SI NULL
-        //trainer = Trainer.getInstance();
+        trainer = Trainer.getInstance();
         String jsonTrainer = readSharedPreferences();
         if (jsonTrainer != null && !jsonTrainer.isEmpty()) {
             Gson gson = new Gson();
@@ -84,19 +84,5 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.frame_layout, fragment);
         ft.commit();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != Activity.RESULT_OK) {
-            return;
-        }
-        if (requestCode == ID_TRAINER) {
-            if (data == null) {
-                return;
-            }
-            this.trainer = data.getParcelableExtra("ID_TRAINER");
-        }
     }
 }

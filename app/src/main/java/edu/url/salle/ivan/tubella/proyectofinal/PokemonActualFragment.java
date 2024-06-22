@@ -48,44 +48,47 @@ public class PokemonActualFragment extends Fragment {
 
     }
 
-
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
 
-        setContentView(R.layout.pokemon_actual);
-
-        Intent intent = getIntent();
-        this.trainer = intent.getParcelableExtra("TRAINER");
-        this.pokemon_name = intent.getStringExtra("POKEMON");
-
-        recyclerView=findViewById(R.id.cazar_pokemon);
-        findViewById(R.id.cazar_pokemon);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.pokemon_actual, container, false);
 
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://pokeapi.co/api/v2/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        obtenerDatosGenerales(v);
 
-        obtenerDatosGenerales();
+        return v;
     }
 
-    private void obtenerDatosGenerales(){
+
+
+    private void obtenerDatosGenerales(View v){
 
         PedirDatosPokemonEspecificos especifico = retrofit.create(PedirDatosPokemonEspecificos.class);
         Call<PokemonRespuestaEspecifico> datospokemon = especifico.obteneDatosPokemon(pokemon_name);
         datospokemon.enqueue(new Callback<PokemonRespuestaEspecifico>() {
             @Override
             public void onResponse(Call<PokemonRespuestaEspecifico> call, Response<PokemonRespuestaEspecifico> response) {
+
+
                 if (response.isSuccessful()){
+
                     PokemonRespuestaEspecifico pokemonRespuestaespecifico = response.body();
-                    TextView h = findViewById(R.id.nombrePokemonView);
+
+                    TextView h = v.findViewById(R.id.nombrePokemonView);
+
                     h.setText(pokemon_name);
                     //tipo
                     ArrayList<Types> tipo = pokemonRespuestaespecifico.getTypes();
-                    TextView textView = findViewById(R.id.tipopokemon);
+                    TextView textView = v.findViewById(R.id.tipopokemon);
                     StringBuilder a= new StringBuilder();
                     for (int i =0; i<tipo.size(); i++){
                         a.append(tipo.get(i).getType().getName()+"/");
@@ -95,7 +98,7 @@ public class PokemonActualFragment extends Fragment {
                     //descripcion
                     int altura = pokemonRespuestaespecifico.getHeight();
                     int peso = pokemonRespuestaespecifico.getWeight();
-                    textView = findViewById(R.id.descripcionpokemon);
+                    textView = v.findViewById(R.id.descripcionpokemon);
                     textView.setText("Altura:"+altura+"\nPeso:"+peso);
 
                     //abilidades
@@ -106,13 +109,13 @@ public class PokemonActualFragment extends Fragment {
 
                         if (abilidades.get(i).isIs_hidden()){
                             if(probabilidad < 0.25) {
-                                textView = findViewById(R.id.habilidadpokemon);
+                                textView = v.findViewById(R.id.habilidadpokemon);
                                 textView.setText(abilidades.get(i).getAbilidad().getName());
                                 i=abilidades.size();
                             }
                         }else{
                             if(probabilidad < 0.5) {
-                                textView = findViewById(R.id.habilidadpokemon);
+                                textView = v.findViewById(R.id.habilidadpokemon);
                                 textView.setText(abilidades.get(i).getAbilidad().getName());
                                 i=abilidades.size();
                             }
@@ -120,26 +123,37 @@ public class PokemonActualFragment extends Fragment {
                     }
                     //stats
                     ArrayList<Stats> stats = pokemonRespuestaespecifico.getStats();
-                    textView = findViewById(R.id.statspokemon);
+                    textView = v.findViewById(R.id.statspokemon);
                     textView.setText("HP:"+stats.get(0).getBase_stat()+"  Atq:"+stats.get(1).getBase_stat()+"   Def:"+stats.get(2).getBase_stat()+
                             "\nSp-Atq:"+stats.get(3).getBase_stat()+"   Sp-def:"+stats.get(4).getBase_stat()+"   Spd:"+stats.get(0).getBase_stat());
                     //img
                     Glide.with(PokemonActualFragment.this)
-                            .load(pokemonRespuestaespecifico.getSprites().getFront_default())
+                            .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/132.png")
                             .centerCrop()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .into((ImageView) findViewById(R.id.fotoPokemonView1));
+                            .into((ImageView) v.findViewById(R.id.fotoPokemonView1));
 
                     Glide.with(PokemonActualFragment.this)
                             .load(pokemonRespuestaespecifico.getSprites().getBack_default())
                             .centerCrop()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .into((ImageView) findViewById(R.id.fotoPokemonView2));
+                            .into((ImageView) v.findViewById(R.id.fotoPokemonView2));
 
+                    recyclerView= (RecyclerView) v.findViewById(R.id.cazar_pokemon);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
                     ArrayList<String> lItem =trainer.getItems();
-                    itemAdapter = new ItemAdapter(lItem,PokemonActualFragment.this,trainer,true,pokemon_name);
+                    itemAdapter = new ItemAdapter(lItem,getActivity(),trainer,true,pokemon_name);
                     recyclerView.setAdapter(itemAdapter);
+
+                }else{
+
+                    TextView h = v.findViewById(R.id.nombrePokemonView);
+                    h.setText("POKEMON NO ENCONTRADO");
+
+                    h =v.findViewById(R.id.Titulohabilidad);
+                    h.setText("");
+
 
                 }
             }
