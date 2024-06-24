@@ -1,11 +1,14 @@
 package edu.url.salle.ivan.tubella.proyectofinal;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,12 +22,14 @@ public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     private Trainer trainer;
 
+    private static final int ID_TRAINER=1;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragment(new PokeBallFragment(trainer));
 
         //CARREGAR SHARED PREFERENCES, COMPROBAR SI NULL
         trainer = Trainer.getInstance();
@@ -34,9 +39,11 @@ public class MainActivity extends AppCompatActivity {
             trainer = gson.fromJson(jsonTrainer, Trainer.class);
         }
 
+        replaceFragment(new PokeBallFragment(trainer,getSupportFragmentManager()));
+
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.pokeball) {
-                replaceFragment(new PokeBallFragment(trainer));
+                replaceFragment(new PokeBallFragment(trainer, getSupportFragmentManager()));
             } else if (item.getItemId() == R.id.trainer) {
                 replaceFragment(new TrainerFragment(trainer));
             } else if (item.getItemId() == R.id.store) {

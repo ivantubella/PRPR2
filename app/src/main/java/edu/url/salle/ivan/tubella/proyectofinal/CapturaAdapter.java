@@ -1,7 +1,6 @@
 package edu.url.salle.ivan.tubella.proyectofinal;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -9,7 +8,6 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-
 import edu.url.salle.ivan.tubella.proyectofinal.Trainer.Trainer;
 
 public class CapturaAdapter extends RecyclerView.Adapter<CapturaHolder> {
