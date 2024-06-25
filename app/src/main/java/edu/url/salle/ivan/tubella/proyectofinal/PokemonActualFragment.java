@@ -240,7 +240,7 @@ public class PokemonActualFragment extends Fragment {
                     recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
                     ArrayList<String> lItem =trainer.getItems();
-                    itemAdapter = new ItemAdapter(lItem,getActivity(),trainer,true,pokemon_name,tipo_evolucion);
+                    itemAdapter = new ItemAdapter(lItem,getActivity(),trainer,true,pokemon_name,tipo_evolucion,shiny,pokemonRespuestaespecifico.getId());
                     recyclerView.setAdapter(itemAdapter);
 
                 }else{

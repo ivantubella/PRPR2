@@ -19,6 +19,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemHolder> {
     private Trainer trainer;
     private String pokemon;
     private int tipo;
+    private int shiny;
+    private int id;
 
 
     public ItemAdapter(ArrayList<String> lItems, Activity activity,Trainer trainer,boolean isCapturar) {
@@ -27,13 +29,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemHolder> {
         this.trainer=trainer;
         this.isCapturar=isCapturar;
     }
-    public ItemAdapter(ArrayList<String> lItems, Activity activity,Trainer trainer,boolean isCapturar,String pokemon,int tipo) {
+    public ItemAdapter(ArrayList<String> lItems, Activity activity,Trainer trainer,boolean isCapturar,String pokemon,int tipo,int shiny, int id) {
         this.lItems = lItems;
         this.activity = activity;
         this.trainer=trainer;
         this.isCapturar=isCapturar;
         this.pokemon=pokemon;
         this.tipo=tipo;
+        this.shiny=shiny;
+        this.id=id;
     }
 
     @Override
@@ -121,7 +125,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemHolder> {
                             trainer.eraseItem(position);
                             notifyItemRemoved(position);
                             notifyItemRangeChanged(position, lItems.size());
-                            trainer.addPokemon(new Captura(pokemon, pokeball));
+                            trainer.addPokemon(new Captura(pokemon, pokeball,shiny,id));
                             Toast.makeText(activity, "POKEMON CAPTURADO", Toast.LENGTH_SHORT).show();
                         } else {
                             trainer.eraseItem(position);

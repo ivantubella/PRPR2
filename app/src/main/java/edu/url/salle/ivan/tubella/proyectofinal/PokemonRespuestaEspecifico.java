@@ -7,11 +7,19 @@ public class PokemonRespuestaEspecifico {
     private ArrayList<Abilidades> abilities;
     private int height;
     private int weight;
+    private int id;
     private ArrayList<Stats> stats;
     private ArrayList<Types> types;
     private Sprites sprites;
     private boolean isCaptured;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public ArrayList<Abilidades> getAbilities() {
         return abilities;

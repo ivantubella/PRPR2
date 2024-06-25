@@ -8,15 +8,20 @@ import androidx.annotation.NonNull;
 public class Captura implements Parcelable {
     private String pokemon;
     private String pokeball;
+    private int shiny;
+    private int id;
 
-    public Captura(String pokemon,String pokeball) {
+    public Captura(String pokemon,String pokeball, int shiny, int id) {
         this.pokemon = pokemon;
         this.pokeball = pokeball;
+        this.shiny=shiny;
+        this.id=id;
     }
 
     protected Captura(Parcel in) {
         pokemon = in.readString();
         pokeball = in.readString();
+
     }
 
     public static final Creator<Captura> CREATOR = new Creator<Captura>() {
