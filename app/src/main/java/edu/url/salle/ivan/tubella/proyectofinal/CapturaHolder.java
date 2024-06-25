@@ -1,5 +1,6 @@
 package edu.url.salle.ivan.tubella.proyectofinal;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +10,12 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 public class CapturaHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     private Captura captura;
+    private Context context;
     private TextView tvName;
     private ImageView ivPokemon;
     private ImageView ivPokeball;
@@ -18,6 +23,8 @@ public class CapturaHolder extends RecyclerView.ViewHolder implements View.OnCli
 
     public CapturaHolder(LayoutInflater inflater, ViewGroup parent, CapturaAdapter adapter) {
         super(inflater.inflate(R.layout.captura_list_view, parent, false));
+        this.context = parent.getContext();
+
         tvName = (TextView) itemView.findViewById(R.id.nomPokemon);
         ivPokeball = (ImageView)itemView.findViewById(R.id.ivPokeballCapturat);
         ivPokemon = (ImageView)itemView.findViewById(R.id.ivPokemon);
@@ -26,11 +33,34 @@ public class CapturaHolder extends RecyclerView.ViewHolder implements View.OnCli
         itemView.setOnClickListener(this);
     }
 
-    public void bind(String item) {
-        //this.pokemon = pokemon;
-        tvName.setText(item);
-        //tvAvistament.setText(pokemon.getAvistament().toString());
-        //ivCapturat.setVisibility(pokemon.isCapturat() ? View.VISIBLE :View.GONE);
+    public void bind(Captura captura) {
+        tvName.setText(captura.getPokemon());
+        String pokeball = captura.getPokeball();
+
+        if (captura != null) {
+            switch (captura.getPokeball()) {
+                case "Pokeball":
+                    pokeball = "poke-ball";
+                    break;
+                case "Superball":
+                    pokeball = "great-ball";
+                    break;
+                case "Ultraball":
+                    pokeball = "ultra-ball";
+                    break;
+                case "Masterball":
+                    pokeball = "master-ball";
+                    break;
+                default:
+                    break;
+            }
+            Glide.with(context)
+                    .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/" + pokeball + ".png")
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(ivPokeball);
+        }
+
     }
 
     @Override

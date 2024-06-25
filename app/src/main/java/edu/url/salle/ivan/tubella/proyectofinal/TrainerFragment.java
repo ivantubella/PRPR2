@@ -76,21 +76,14 @@ public class TrainerFragment extends Fragment {
         });
 
         //////ITEMS//////
-        ArrayList<String> lItem = /*new ArrayList<>();//*/ trainer.getItems();
-        /*for (int i = 0; i <= 10; i++) {
-            lItem.add(Integer.toString(i));
-        }*/
+        ArrayList<String> lItem = trainer.getItems();
         itemAdapter = new ItemAdapter(lItem, getActivity(),trainer,false);
         //li diem a la nostra recyclerview que aquest es el seu adapter
         itemsRecyclerView.setAdapter(itemAdapter);
 
         //////CAPTURAS//////
         ArrayList<Captura> lPokemons = trainer.getPokemons();
-        /*for (int i = 0; i <= 1; i++) {
-            lPokemons.add(new Captura(Integer.toString(i), "",Integer.toString(i+1)));
-        }*/
         capturaAdapter = new CapturaAdapter(lPokemons, getActivity(), trainer);
-        //li diem a la nostra recyclerview que aquest es el seu adapter
         pokemonsCapturatsRecyclerView.setAdapter(capturaAdapter);
     }
 

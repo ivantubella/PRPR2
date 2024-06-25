@@ -51,33 +51,39 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemHolder> {
     }
 
     public void removeItem(int position,String pokeball) {
-        if (isCapturar){
-            if (position >= 0 && position < lItems.size()) {
+        if (trainer.isCanCapture()) {
+            if (isCapturar) {
+                if (position >= 0 && position < lItems.size()) {
 
-                ArrayList<Captura> capturas= trainer.getPokemons();
+                    ArrayList<Captura> capturas = trainer.getPokemons();
 
-                boolean denegado=false;
-                if (!capturas.isEmpty()){
-                    for (Captura c : capturas ) {
-                        String a = c.getPokemon();
-                        if (a.equals(pokemon)){
-                            denegado=true;
+                    boolean denegado = false;
+                    if (!capturas.isEmpty()) {
+                        for (Captura c : capturas) {
+                            String a = c.getPokemon();
+                            if (a.equals(pokemon)) {
+                                denegado = true;
+                            }
                         }
+                    } else {
+                        denegado = false;
                     }
-                }else{
-                    denegado=false;
-                }
 
-                if (denegado){
-                    Toast.makeText(activity, "NO SE PUEDE CAPTURAR UN POKEMON YA CAPTURADO", Toast.LENGTH_SHORT).show();
+                    if (denegado) {
+                        Toast.makeText(activity, "NO SE PUEDE CAPTURAR UN POKEMON YA CAPTURADO", Toast.LENGTH_SHORT).show();
 
-                }else{
-                    trainer.eraseItem(position);
-                    notifyItemRemoved(position);
-                    notifyItemRangeChanged(position, lItems.size());
-                    trainer.addPokemon(new Captura(pokemon,pokeball));
-                    Toast.makeText(activity, "POKEMON CAPTURADO", Toast.LENGTH_SHORT).show();
+                    } else {
+                        //TODO
+                    
+                        trainer.eraseItem(position);
+                        notifyItemRemoved(position);
+                        notifyItemRangeChanged(position, lItems.size());
+                        trainer.addPokemon(new Captura(pokemon, pokeball));
+                        Toast.makeText(activity, "POKEMON CAPTURADO", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
+        } else {
+            Toast.makeText(activity, "YA SE HAN CAPTURADO 6 POKEMONS, LIBERA TUS CAPTURAS PARA PODER CAPTURAR", Toast.LENGTH_SHORT).show();
         }
     }}

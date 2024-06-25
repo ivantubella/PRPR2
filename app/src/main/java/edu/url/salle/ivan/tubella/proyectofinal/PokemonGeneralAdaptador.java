@@ -33,7 +33,6 @@ public class PokemonGeneralAdaptador extends RecyclerView.Adapter<PokemonGeneral
         dataset = new ArrayList<>();
         this.trainer=trainer;
         this.fm=fm;
-
     }
 
     @Override
@@ -53,6 +52,37 @@ public class PokemonGeneralAdaptador extends RecyclerView.Adapter<PokemonGeneral
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.fotoImageView);
 
+
+        String pokeball = null;
+        for(Captura c: trainer.getPokemons()) {
+            if (c.getPokemon().equals(p.getName())) { //esta capturat!
+                pokeball = c.getPokeball();
+            }
+        }
+        if (pokeball != null && !pokeball.isEmpty()) {
+            switch (pokeball) {
+                case "Pokeball":
+                    pokeball = "poke-ball";
+                    break;
+                case "Superball":
+                    pokeball = "great-ball";
+                    break;
+                case "Ultraball":
+                    pokeball = "ultra-ball";
+                    break;
+                case "Masterball":
+                    pokeball = "master-ball";
+                    break;
+                default:
+                    break;
+            }
+            Glide.with(context)
+                    .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/" + pokeball + ".png")
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(holder.imPokeball);
+        }
+
     }
 
     @Override
@@ -69,12 +99,15 @@ public class PokemonGeneralAdaptador extends RecyclerView.Adapter<PokemonGeneral
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private ImageView fotoImageView;
+        private ImageView imPokeball;
         private TextView nombreTextView;
         private Trainer trainer;
         public ViewHolder(View itemView,Trainer trainer) {
             super(itemView);
             fotoImageView = itemView.findViewById(R.id.fotoPokemonView);
             nombreTextView = itemView.findViewById(R.id.nombrePokemonView);
+            imPokeball = (ImageView) itemView.findViewById(R.id.fotoPokeball);
+
             this.trainer=trainer;
             itemView.setOnClickListener(this);
         }
