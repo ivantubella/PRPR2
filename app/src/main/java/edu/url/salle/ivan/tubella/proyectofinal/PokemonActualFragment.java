@@ -23,8 +23,13 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
+import edu.url.salle.ivan.tubella.proyectofinal.Evolucion_y_legendario.PedirDatosPokemonEspecificosEspecie;
+import edu.url.salle.ivan.tubella.proyectofinal.Evolucion_y_legendario.PedirDatosPokemonEspecificosEspecieChain;
+import edu.url.salle.ivan.tubella.proyectofinal.Evolucion_y_legendario.PoemonEspecieLegendario;
+import edu.url.salle.ivan.tubella.proyectofinal.Evolucion_y_legendario.PokemonEvolutionChain;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,20 +37,26 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import edu.url.salle.ivan.tubella.proyectofinal.Trainer.Trainer;
 
+
 public class PokemonActualFragment extends Fragment {
     private Retrofit retrofit;
+    private Retrofit retrofit2;
     private RecyclerView recyclerView;
     private Trainer trainer;
     private String pokemon_name;
     private ItemAdapter itemAdapter;
     private FragmentManager fm;
+    private int shiny;
+    private int tipo_evolucion;
+    private String url;
+    private boolean legendary;
 
 
-    public PokemonActualFragment(Trainer trainer, FragmentManager fm, String pokemon_name) {
+    public PokemonActualFragment(Trainer trainer, FragmentManager fm, String pokemon_name,int shiny) {
         this.trainer=trainer;
         this.fm=fm;
         this.pokemon_name=pokemon_name;
-
+        this.shiny=shiny;
     }
 
     @Override
@@ -63,21 +74,90 @@ public class PokemonActualFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        retrofit2 = new Retrofit.Builder()
+                .baseUrl("https://pokeapi.co/api/v2/evolution-chain/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
         obtenerDatosGenerales(v);
 
         return v;
     }
 
+    private void obtenerDatosevoluciones(){
+
+        PedirDatosPokemonEspecificosEspecieChain especifico_especie = retrofit2.create(PedirDatosPokemonEspecificosEspecieChain.class);
+        Call<PokemonEvolutionChain> pokemon_especie = especifico_especie.obteneDatosPokemon(url);
+        pokemon_especie.enqueue(new Callback<PokemonEvolutionChain>() {
+
+            @Override
+            public void onResponse(Call<PokemonEvolutionChain> call, Response<PokemonEvolutionChain> response) {
+                if (response.isSuccessful()) {
+
+                    PokemonEvolutionChain poemonEspecieLegendario = response.body();
+
+                     List<String> nombres = poemonEspecieLegendario.return_names();
+
+                     int num = nombres.size();
+                     int a=0;
+
+                     if (legendary){
+                         tipo_evolucion=3;
+                     } else if (num==2) {
+                         for (String n :nombres){
+                             if (n.equals(pokemon_name)){
+                                 tipo_evolucion= a+1;
+                             }
+                             a++;
+                         }
+                     }else{
+                         for (String n :nombres){
+                             if (n.equals(pokemon_name)){
+                                 tipo_evolucion = a;
+                             }
+                             a++;
+                         }
+                     }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PokemonEvolutionChain> call, Throwable t) {
+
+            }
+        });
+    }
 
 
     private void obtenerDatosGenerales(View v){
 
         PedirDatosPokemonEspecificos especifico = retrofit.create(PedirDatosPokemonEspecificos.class);
         Call<PokemonRespuestaEspecifico> datospokemon = especifico.obteneDatosPokemon(pokemon_name);
+
+        PedirDatosPokemonEspecificosEspecie especifico_especie = retrofit.create(PedirDatosPokemonEspecificosEspecie.class);
+        Call<PoemonEspecieLegendario> pokemon_especie = especifico_especie.obteneDatosPokemon(pokemon_name);
+
+
+
+        pokemon_especie.enqueue(new Callback<PoemonEspecieLegendario>() {
+            @Override
+            public void onResponse(Call<PoemonEspecieLegendario> call, Response<PoemonEspecieLegendario> response) {
+                if (response.isSuccessful()) {
+                    PoemonEspecieLegendario poemonEspecieLegendario = response.body();
+                    url = poemonEspecieLegendario.getEvolution_chain().getUrl();
+                    legendary = poemonEspecieLegendario.isIs_legendary();
+                    obtenerDatosevoluciones();
+                }
+            }
+            @Override
+            public void onFailure(Call<PoemonEspecieLegendario> call, Throwable t) {
+            }
+        });
+
         datospokemon.enqueue(new Callback<PokemonRespuestaEspecifico>() {
             @Override
             public void onResponse(Call<PokemonRespuestaEspecifico> call, Response<PokemonRespuestaEspecifico> response) {
-
 
                 if (response.isSuccessful()){
 
@@ -127,23 +207,40 @@ public class PokemonActualFragment extends Fragment {
                     textView.setText("HP:"+stats.get(0).getBase_stat()+"  Atq:"+stats.get(1).getBase_stat()+"   Def:"+stats.get(2).getBase_stat()+
                             "\nSp-Atq:"+stats.get(3).getBase_stat()+"   Sp-def:"+stats.get(4).getBase_stat()+"   Spd:"+stats.get(0).getBase_stat());
                     //img
-                    Glide.with(PokemonActualFragment.this)
-                            .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/132.png")
-                            .centerCrop()
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .into((ImageView) v.findViewById(R.id.fotoPokemonView1));
+                    if (shiny==1){
+                        Glide.with(PokemonActualFragment.this)
+                                .load(pokemonRespuestaespecifico.getSprites().getFront_shiny())
+                                .centerCrop()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .into((ImageView) v.findViewById(R.id.fotoPokemonView1));
 
-                    Glide.with(PokemonActualFragment.this)
-                            .load(pokemonRespuestaespecifico.getSprites().getBack_default())
-                            .centerCrop()
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .into((ImageView) v.findViewById(R.id.fotoPokemonView2));
+                        Glide.with(PokemonActualFragment.this)
+                                .load(pokemonRespuestaespecifico.getSprites().getBack_shiny())
+                                .centerCrop()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .into((ImageView) v.findViewById(R.id.fotoPokemonView2));
+                    }else{
+                        Glide.with(PokemonActualFragment.this)
+                                .load(pokemonRespuestaespecifico.getSprites().getFront_default())
+                                .centerCrop()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .into((ImageView) v.findViewById(R.id.fotoPokemonView1));
+
+                        Glide.with(PokemonActualFragment.this)
+                                .load(pokemonRespuestaespecifico.getSprites().getBack_default())
+                                .centerCrop()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .into((ImageView) v.findViewById(R.id.fotoPokemonView2));
+                    }
+
+
+                    //lista objetos
 
                     recyclerView= (RecyclerView) v.findViewById(R.id.cazar_pokemon);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
                     ArrayList<String> lItem =trainer.getItems();
-                    itemAdapter = new ItemAdapter(lItem,getActivity(),trainer,true,pokemon_name);
+                    itemAdapter = new ItemAdapter(lItem,getActivity(),trainer,true,pokemon_name,tipo_evolucion);
                     recyclerView.setAdapter(itemAdapter);
 
                 }else{
@@ -154,7 +251,6 @@ public class PokemonActualFragment extends Fragment {
                     h =v.findViewById(R.id.Titulohabilidad);
                     h.setText("");
 
-
                 }
             }
             @Override
@@ -162,5 +258,7 @@ public class PokemonActualFragment extends Fragment {
                 Log.e("err", "Error: " + t.getMessage());
             }
         });
+
+
     }
 }
