@@ -20,7 +20,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
-import edu.url.salle.ivan.tubella.proyectofinal.Trainer.Trainer;
+import java.util.Random;
+
+
 
 public class PokemonGeneralAdaptador extends RecyclerView.Adapter<PokemonGeneralAdaptador.ViewHolder> {
     private ArrayList<PokemonGeneral> dataset;
@@ -46,13 +48,23 @@ public class PokemonGeneralAdaptador extends RecyclerView.Adapter<PokemonGeneral
     public void onBindViewHolder(ViewHolder holder, int position) {
         PokemonGeneral p = dataset.get(position);
         holder.nombreTextView.setText(p.getName());
-
-        Glide.with(context)
-                .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + p.getNumber() + ".png")
-                .centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(holder.fotoImageView);
-
+        Random random = new Random();
+        int numeroAleatorio = random.nextInt(500) + 1;
+        if(numeroAleatorio==1){
+            holder.shiny = 1;
+            Glide.with(context)
+                    .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/" + p.getNumber() + ".png")
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(holder.fotoImageView);
+        }else{
+            holder.shiny = 0;
+            Glide.with(context)
+                    .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + p.getNumber() + ".png")
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(holder.fotoImageView);
+        }
     }
 
     @Override
@@ -71,6 +83,7 @@ public class PokemonGeneralAdaptador extends RecyclerView.Adapter<PokemonGeneral
         private ImageView fotoImageView;
         private TextView nombreTextView;
         private Trainer trainer;
+        private int shiny;
         public ViewHolder(View itemView,Trainer trainer) {
             super(itemView);
             fotoImageView = itemView.findViewById(R.id.fotoPokemonView);
@@ -83,7 +96,7 @@ public class PokemonGeneralAdaptador extends RecyclerView.Adapter<PokemonGeneral
         public void onClick(View view) {
 
             FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.frame_layout, new PokemonActualFragment(trainer,fm,nombreTextView.getText().toString()));
+            ft.replace(R.id.frame_layout, new PokemonActualFragment(trainer,fm,nombreTextView.getText().toString(),shiny));
             ft.commit();
 
 

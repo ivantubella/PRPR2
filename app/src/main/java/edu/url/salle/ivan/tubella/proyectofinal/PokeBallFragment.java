@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -59,11 +60,17 @@ public class PokeBallFragment extends Fragment{
         this.editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
-                if(!hasFocus) { //user just left it, tapped outside
+                if(!hasFocus) {
                     String PokemonName = editText.getText().toString();
 
                     FragmentTransaction ft = fm.beginTransaction();
-                    ft.replace(R.id.frame_layout, new PokemonActualFragment(trainer,fm,PokemonName));
+                    Random random = new Random();
+                    int numeroAleatorio = random.nextInt(500) + 1;
+                    int shiny=0;
+                    if (numeroAleatorio ==1 ){
+                        shiny=1;
+                    }
+                    ft.replace(R.id.frame_layout, new PokemonActualFragment(trainer,fm,PokemonName,shiny));
                     ft.commit();
 
                 }

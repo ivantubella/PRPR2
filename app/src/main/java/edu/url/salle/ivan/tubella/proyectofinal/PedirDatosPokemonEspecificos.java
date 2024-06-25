@@ -10,3 +10,4 @@ public interface PedirDatosPokemonEspecificos {
     Call<PokemonRespuestaEspecifico> obteneDatosPokemon(@Path("name")String pokemon);
 
 }
+
