@@ -54,75 +54,85 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemHolder> {
     }
 
     public void removeItem(int position,String pokeball) {
-        if (isCapturar){
-            if (position >= 0 && position < lItems.size()) {
+        if (trainer.isCanCapture()) {
+            if (isCapturar) {
+                if (position >= 0 && position < lItems.size()) {
 
-                ArrayList<Captura> capturas= trainer.getPokemons();
+                    ArrayList<Captura> capturas = trainer.getPokemons();
 
-                boolean denegado=false;
-                if (!capturas.isEmpty()){
-                    for (Captura c : capturas ) {
-                        String a = c.getPokemon();
-                        if (a.equals(pokemon)){
-                            denegado=true;
+                    boolean denegado = false;
+                    if (!capturas.isEmpty()) {
+                        for (Captura c : capturas) {
+                            String a = c.getPokemon();
+                            if (a.equals(pokemon)) {
+                                denegado = true;
+                            }
+                        }
+                    } else {
+                        denegado = false;
+                    }
+
+                    if (denegado) {
+                        Toast.makeText(activity, "NO SE PUEDE CAPTURAR UN POKEMON YA CAPTURADO", Toast.LENGTH_SHORT).show();
+
+                    } else {
+
+                        int limite = 0, limite_menor = 0;
+                        if (tipo == 0) {
+                            limite = 80;
+                            limite_menor = 20;
+                        } else if (tipo == 1) {
+                            limite = 200;
+                            limite_menor = 80;
+                        } else if (tipo == 2) {
+                            limite = 350;
+                            limite_menor = 200;
+                        } else {
+                            limite = 200;
+                            limite_menor = 350;
+                        }
+
+                        Random random = new Random();
+                        int numeroAleatorio = random.nextInt(limite) + limite_menor;
+
+                        boolean capturado = false;
+
+                        double probabilidad=0;
+
+                        if (pokeball.equals("Pokeball")) {
+                            probabilidad = ((double) (600 - numeroAleatorio) /600)*100;
+                        } else if (pokeball.equals("Superball")) {
+                            probabilidad = ((double) (600 - numeroAleatorio) /600)*100*1.5;
+                        } else if (pokeball.equals("Ultraball")) {
+                            probabilidad = ((double) (600 - numeroAleatorio) /600)*100*2;
+
+                        } else {
+                            probabilidad = 100;
+                        }
+
+                        double probabilidad_random = random.nextInt(100) + 1;
+
+                        if (probabilidad_random<=probabilidad){
+                            capturado = true;
+                        }
+                        if (capturado) {
+                            trainer.increaseMoney(400 + 100 * numeroAleatorio);
+
+                            trainer.eraseItem(position);
+                            notifyItemRemoved(position);
+                            notifyItemRangeChanged(position, lItems.size());
+                            trainer.addPokemon(new Captura(pokemon, pokeball));
+                            Toast.makeText(activity, "POKEMON CAPTURADO", Toast.LENGTH_SHORT).show();
+                        } else {
+                            trainer.eraseItem(position);
+                            notifyItemRemoved(position);
+                            notifyItemRangeChanged(position, lItems.size());
+                            Toast.makeText(activity, "HAS FALLADO LA CAPTURA", Toast.LENGTH_SHORT).show();
                         }
                     }
-                }else{
-                    denegado=false;
-                }
-
-                if (denegado){
-                    Toast.makeText(activity, "NO SE PUEDE CAPTURAR UN POKEMON YA CAPTURADO", Toast.LENGTH_SHORT).show();
-
-                }else{
-
-                    int limite=0, limite_menor=0;
-                    if (tipo==0){
-                    limite = 80;
-                    limite_menor=20;
-                    } else if (tipo==1) {
-                        limite = 200;
-                        limite_menor=80;
-                    } else if (tipo==2) {
-                        limite = 350;
-                        limite_menor=200;
-                    }else{
-                        limite = 200;
-                        limite_menor=350;
-                    }
-                    Random random = new Random();
-                    int numeroAleatorio = random.nextInt(limite) + limite_menor;
-                    /////////////////////cambiar esto a false
-                    boolean capturado = true;
-
-                    if (pokeball.equals("pokeball")){
-                        
-                    } else if (pokeball.equals("Superball")) {
-                        
-                    } else if (pokeball.equals("Ultraball")) {
-                        
-                    }else{
-                        capturado = true;
-                    }
-
-                    if (capturado){
-                        trainer.increaseMoney(400+100*numeroAleatorio);
-
-                        trainer.eraseItem(position);
-                        notifyItemRemoved(position);
-                        notifyItemRangeChanged(position, lItems.size());
-                        trainer.addPokemon(new Captura(pokemon,pokeball));
-                        Toast.makeText(activity, "POKEMON CAPTURADO", Toast.LENGTH_SHORT).show();
-                    }else {
-                        trainer.eraseItem(position);
-                        notifyItemRemoved(position);
-                        notifyItemRangeChanged(position, lItems.size());
-                        Toast.makeText(activity, "HAS FALLADO LA CAPTURA", Toast.LENGTH_SHORT).show();
-
-                    }
-
-
                 }
             }
+        } else {
+            Toast.makeText(activity, "YA SE HAN CAPTURADO 6 POKEMONS, LIBERA TUS CAPTURAS PARA PODER CAPTURAR", Toast.LENGTH_SHORT).show();
         }
     }}

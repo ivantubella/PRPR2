@@ -30,7 +30,7 @@ public class CapturaAdapter extends RecyclerView.Adapter<CapturaHolder> {
     @Override
     public void onBindViewHolder(CapturaHolder holder, int position) {
         Captura captura = lCaptures.get(position);
-        holder.bind(captura.getPokemon());
+        holder.bind(captura);
     }
 
     @Override

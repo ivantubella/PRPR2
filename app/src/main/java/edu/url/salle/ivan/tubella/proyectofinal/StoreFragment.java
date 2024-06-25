@@ -53,7 +53,6 @@ public class StoreFragment extends Fragment {
                 if (trainer.getMoney() >= 200) {
                     trainer.decreaseMoney(200);
                     updateMoney();
-                    //TODO ADD ITEM AL TRAINER + LLAMAR API PARA OBTENER LA POKEBALL
                     trainer.addItem("Pokeball");
                 } else {
                     Toast.makeText(getActivity(), "THERE'S NOT ENOUGH MONEY TO BUY THIS ITEM", Toast.LENGTH_SHORT).show();
@@ -67,7 +66,6 @@ public class StoreFragment extends Fragment {
                 if (trainer.getMoney() >= 500) {
                     trainer.decreaseMoney(500);
                     updateMoney();
-                    //TODO ADD ITEM AL TRAINER + LLAMAR API PARA OBTENER LA SUPERBALL
                     trainer.addItem("Superball");
                 } else {
                     Toast.makeText(getActivity(), "THERE'S NOT ENOUGH MONEY TO BUY THIS ITEM", Toast.LENGTH_SHORT).show();
@@ -81,7 +79,6 @@ public class StoreFragment extends Fragment {
                 if (trainer.getMoney() >= 1500) {
                     trainer.decreaseMoney(1500);
                     updateMoney();
-                    //TODO ADD ITEM AL TRAINER + LLAMAR API PARA OBTENER LA ULTRABALL
                     trainer.addItem("Ultraball");
                 } else {
                     Toast.makeText(getActivity(), "THERE'S NOT ENOUGH MONEY TO BUY THIS ITEM", Toast.LENGTH_SHORT).show();
@@ -95,7 +92,6 @@ public class StoreFragment extends Fragment {
                 if (trainer.getMoney() >= 100000) {
                     trainer.decreaseMoney(100000);
                     updateMoney();
-                    //TODO ADD ITEM AL TRAINER + LLAMAR API PARA OBTENER LA MASTERBALL
                     trainer.addItem("Masterball");
                 } else {
                     Toast.makeText(getActivity(), "THERE'S NOT ENOUGH MONEY TO BUY THIS ITEM", Toast.LENGTH_SHORT).show();
