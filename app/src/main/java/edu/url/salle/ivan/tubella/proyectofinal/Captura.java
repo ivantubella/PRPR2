@@ -61,4 +61,20 @@ public class Captura implements Parcelable {
         dest.writeString(pokemon);
         dest.writeString(pokeball);
     }
+
+    public int getShiny() {
+        return shiny;
+    }
+
+    public void setShiny(int shiny) {
+        this.shiny = shiny;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

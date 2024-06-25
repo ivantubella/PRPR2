@@ -60,6 +60,19 @@ public class CapturaHolder extends RecyclerView.ViewHolder implements View.OnCli
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(ivPokeball);
         }
+        if (captura.getShiny() == 1) {
+            Glide.with(context)
+                    .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/" + captura.getId() + ".png")
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(ivPokemon);
+        } else if (captura.getShiny() == 0) {
+            Glide.with(context)
+                    .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + captura.getId() + ".png")
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(ivPokemon);
+        }
 
     }
 
