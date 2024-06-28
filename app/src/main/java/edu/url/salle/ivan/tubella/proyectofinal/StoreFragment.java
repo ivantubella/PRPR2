@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import edu.url.salle.ivan.tubella.proyectofinal.Trainer.Trainer;
@@ -15,10 +16,10 @@ import edu.url.salle.ivan.tubella.proyectofinal.Trainer.Trainer;
 public class StoreFragment extends Fragment {
     private Trainer trainer;
     private TextView tvMoney;
-    private Button btnPokeball;
-    private Button btnSuperball;
-    private Button btnUltraball;
-    private Button btnMasterball;
+    private ImageButton btnPokeball;
+    private ImageButton btnSuperball;
+    private ImageButton btnUltraball;
+    private ImageButton btnMasterball;
 
 
     public StoreFragment(Trainer trainer) {
@@ -36,10 +37,11 @@ public class StoreFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_store, container, false);
 
         this.tvMoney = (TextView) v.findViewById(R.id.textViewMoney);
-        this.btnPokeball = (Button) v.findViewById(R.id.buttonPokeball);
-        this.btnSuperball = (Button) v.findViewById(R.id.buttonSuperball);
-        this.btnUltraball = (Button) v.findViewById(R.id.buttonUltraball);
-        this.btnMasterball = (Button) v.findViewById(R.id.buttonMasterball);
+        this.btnPokeball = (ImageButton) v.findViewById(R.id.buttonPokeball);
+        this.btnSuperball = (ImageButton) v.findViewById(R.id.buttonSuperball);
+        this.btnUltraball = (ImageButton) v.findViewById(R.id.buttonUltraball);
+        this.btnMasterball = (ImageButton) v.findViewById(R.id.buttonMasterball);
+
         updateMoney();
         buttonsFunctionality();
 
@@ -54,6 +56,7 @@ public class StoreFragment extends Fragment {
                     trainer.decreaseMoney(200);
                     updateMoney();
                     trainer.addItem("Pokeball");
+                    Toast.makeText(getActivity(), "YOU JUST BOUGHT A POKEBALL!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity(), "THERE'S NOT ENOUGH MONEY TO BUY THIS ITEM", Toast.LENGTH_SHORT).show();
                 }
@@ -67,6 +70,7 @@ public class StoreFragment extends Fragment {
                     trainer.decreaseMoney(500);
                     updateMoney();
                     trainer.addItem("Superball");
+                    Toast.makeText(getActivity(), "YOU JUST BOUGHT A SUPERBALL!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity(), "THERE'S NOT ENOUGH MONEY TO BUY THIS ITEM", Toast.LENGTH_SHORT).show();
                 }
@@ -80,6 +84,7 @@ public class StoreFragment extends Fragment {
                     trainer.decreaseMoney(1500);
                     updateMoney();
                     trainer.addItem("Ultraball");
+                    Toast.makeText(getActivity(), "YOU JUST BOUGHT AN ULTRABALL!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity(), "THERE'S NOT ENOUGH MONEY TO BUY THIS ITEM", Toast.LENGTH_SHORT).show();
                 }
@@ -93,6 +98,7 @@ public class StoreFragment extends Fragment {
                     trainer.decreaseMoney(100000);
                     updateMoney();
                     trainer.addItem("Masterball");
+                    Toast.makeText(getActivity(), "YOU JUST BOUGHT A MASTERBALL!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity(), "THERE'S NOT ENOUGH MONEY TO BUY THIS ITEM", Toast.LENGTH_SHORT).show();
                 }

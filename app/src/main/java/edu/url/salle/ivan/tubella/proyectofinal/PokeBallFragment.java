@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class PokeBallFragment extends Fragment{
     private boolean aptoParaCargar;
     private FragmentManager fm;
     private EditText editText;
-
+    private Button btnSearch;
 
     public PokeBallFragment(Trainer trainer, FragmentManager fm) {
         this.trainer = trainer;
@@ -57,6 +58,14 @@ public class PokeBallFragment extends Fragment{
         View v = inflater.inflate(R.layout.fragment_poke_ball, container, false);
 
         this.editText = (EditText) v.findViewById(R.id.buscador);
+        this.btnSearch = (Button) v.findViewById(R.id.buttonSearch);
+        this.btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editText.requestFocus();
+            }
+        });
+
         this.editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {

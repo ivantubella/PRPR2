@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -23,7 +24,14 @@ public class TrainerFragment extends Fragment {
     public RecyclerView pokemonsCapturatsRecyclerView;
     private CapturaAdapter capturaAdapter;
     private EditText editText;
+    private Button btnSave;
     private TextView tvMoney;
+    private TextView tvNoItems;
+    private TextView tvNoCapturas;
+    private TextView tvPokeball;
+    private TextView tvSuperball;
+    private TextView tvUltraball;
+    private TextView tvMasterball;
 
     public TrainerFragment(Trainer trainer) {
         this.trainer = trainer;
@@ -41,11 +49,19 @@ public class TrainerFragment extends Fragment {
 
         this.editText = (EditText) v.findViewById(R.id.tvNameTrainer);
         this.tvMoney = (TextView) v.findViewById(R.id.tvMoney);
+        this.btnSave = (Button) v.findViewById(R.id.buttonSave);
+        this.tvNoItems = (TextView) v.findViewById(R.id.textViewNoItems);
+        this.tvNoCapturas = (TextView) v.findViewById(R.id.textViewNoCapturas);
+
+        this.tvPokeball = (TextView) v.findViewById(R.id.textViewPokeball);
+        this.tvSuperball = (TextView) v.findViewById(R.id.textViewSuperball);
+        this.tvUltraball = (TextView) v.findViewById(R.id.textViewUltraball);
+        this.tvMasterball = (TextView) v.findViewById(R.id.textViewMasterball);
 
         //////ITEMS//////
-        itemsRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerViewItems);
-        v.findViewById(R.id.recyclerViewItems);
-        itemsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        //itemsRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerViewItems);
+        //v.findViewById(R.id.recyclerViewItems);
+        //itemsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         //////CAPTURAS//////
         pokemonsCapturatsRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerViewPokemons);
@@ -63,6 +79,13 @@ public class TrainerFragment extends Fragment {
         this.tvMoney.setText(Integer.toString(this.trainer.getMoney()).concat(" $"));
         this.editText.setText(this.trainer.getName());
 
+        this.btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editText.requestFocus();
+            }
+        });
+
         this.editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
@@ -70,21 +93,58 @@ public class TrainerFragment extends Fragment {
                     String trainerName = editText.getText().toString();
                     trainer.setName(trainerName);
                     Log.d("TAG NAME", trainerName);
-                    //editText.setText(trainerName);
                 }
             }
         });
 
         //////ITEMS//////
         ArrayList<String> lItem = trainer.getItems();
-        itemAdapter = new ItemAdapter(lItem, getActivity(),trainer,false);
+        int ctrPokeball = 0, ctrSuperball = 0, ctrUltraball = 0, ctrMasterball = 0;
+        for (String s : lItem) {
+            switch (s) {
+                case "Pokeball":
+                    ctrPokeball++;
+                    break;
+                case "Superball":
+                    ctrSuperball++;
+                    break;
+                case "Ultraball":
+                    ctrUltraball++;
+                    break;
+                case "Masterball":
+                    ctrMasterball++;
+                    break;
+            }
+        }
+
+        this.tvPokeball.setText(Integer.toString(ctrPokeball));
+        this.tvSuperball.setText(Integer.toString(ctrSuperball));
+        this.tvUltraball.setText(Integer.toString(ctrUltraball));
+        this.tvMasterball.setText(Integer.toString(ctrMasterball));
+
+        //itemAdapter = new ItemAdapter(lItem, getActivity(),trainer,false);
         //li diem a la nostra recyclerview que aquest es el seu adapter
-        itemsRecyclerView.setAdapter(itemAdapter);
+        //itemsRecyclerView.setAdapter(itemAdapter);
 
         //////CAPTURAS//////
         ArrayList<Captura> lPokemons = trainer.getPokemons();
         capturaAdapter = new CapturaAdapter(lPokemons, getActivity(), trainer);
         pokemonsCapturatsRecyclerView.setAdapter(capturaAdapter);
+
+        if(lItem.isEmpty()) {
+            this.tvNoItems.setText("You don't have items yet. Go to the store to purchase some.");
+        } else {
+            this.tvNoItems.setText("");
+        }
+
+        if(lPokemons.isEmpty()) {
+            this.tvNoCapturas.setText("You haven't captured any pokemon yet. Go to the pokedex to catch them all!");
+        } else {
+            this.tvNoCapturas.setText("");
+        }
+        if ((lPokemons.size() == 6)) {
+            this.tvNoCapturas.setText("You already have captured 6 pokemons. Click on any capture to liberate it.");
+        }
     }
 
 }
