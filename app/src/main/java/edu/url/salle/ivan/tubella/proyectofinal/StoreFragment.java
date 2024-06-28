@@ -7,58 +7,106 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
+import edu.url.salle.ivan.tubella.proyectofinal.Trainer.Trainer;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link StoreFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class StoreFragment extends Fragment {
+    private Trainer trainer;
+    private TextView tvMoney;
+    private ImageButton btnPokeball;
+    private ImageButton btnSuperball;
+    private ImageButton btnUltraball;
+    private ImageButton btnMasterball;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public StoreFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment StoreFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static StoreFragment newInstance(String param1, String param2) {
-        StoreFragment fragment = new StoreFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public StoreFragment(Trainer trainer) {
+        this.trainer = trainer;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_store, container, false);
+        View v = inflater.inflate(R.layout.fragment_store, container, false);
+
+        this.tvMoney = (TextView) v.findViewById(R.id.textViewMoney);
+        this.btnPokeball = (ImageButton) v.findViewById(R.id.buttonPokeball);
+        this.btnSuperball = (ImageButton) v.findViewById(R.id.buttonSuperball);
+        this.btnUltraball = (ImageButton) v.findViewById(R.id.buttonUltraball);
+        this.btnMasterball = (ImageButton) v.findViewById(R.id.buttonMasterball);
+
+        updateMoney();
+        buttonsFunctionality();
+
+        return v;
     }
+
+    private void buttonsFunctionality() {
+        btnPokeball.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (trainer.getMoney() >= 200) {
+                    trainer.decreaseMoney(200);
+                    updateMoney();
+                    trainer.addItem("Pokeball");
+                    Toast.makeText(getActivity(), "YOU JUST BOUGHT A POKEBALL!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "THERE'S NOT ENOUGH MONEY TO BUY THIS ITEM", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        btnSuperball.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (trainer.getMoney() >= 500) {
+                    trainer.decreaseMoney(500);
+                    updateMoney();
+                    trainer.addItem("Superball");
+                    Toast.makeText(getActivity(), "YOU JUST BOUGHT A SUPERBALL!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "THERE'S NOT ENOUGH MONEY TO BUY THIS ITEM", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        btnUltraball.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (trainer.getMoney() >= 1500) {
+                    trainer.decreaseMoney(1500);
+                    updateMoney();
+                    trainer.addItem("Ultraball");
+                    Toast.makeText(getActivity(), "YOU JUST BOUGHT AN ULTRABALL!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "THERE'S NOT ENOUGH MONEY TO BUY THIS ITEM", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        btnMasterball.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (trainer.getMoney() >= 100000) {
+                    trainer.decreaseMoney(100000);
+                    updateMoney();
+                    trainer.addItem("Masterball");
+                    Toast.makeText(getActivity(), "YOU JUST BOUGHT A MASTERBALL!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "THERE'S NOT ENOUGH MONEY TO BUY THIS ITEM", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+    private void updateMoney() {
+        this.tvMoney.setText("Money: ".concat(Integer.toString(this.trainer.getMoney()).concat(" $")));
+    }
+
 }
