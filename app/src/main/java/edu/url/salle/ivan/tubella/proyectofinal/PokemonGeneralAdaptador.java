@@ -67,11 +67,11 @@ public class PokemonGeneralAdaptador extends RecyclerView.Adapter<PokemonGeneral
 
         String pokeball = null;
         for(Captura c: trainer.getPokemons()) {
-            if (c.getPokemon().equals(p.getName())) { //esta capturat!
+            if (c.getPokemon().equals(p.getName())) {
                 pokeball = c.getPokeball();
             }
         }
-        if (pokeball != null && !pokeball.isEmpty()) {
+        if (pokeball != null ) {
             switch (pokeball) {
                 case "Pokeball":
                     pokeball = "poke-ball";
@@ -93,6 +93,8 @@ public class PokemonGeneralAdaptador extends RecyclerView.Adapter<PokemonGeneral
                     .centerCrop()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(holder.imPokeball);
+        }else{
+            holder.imPokeball.setImageDrawable(null);
         }
 
     }

@@ -82,7 +82,7 @@ public class TrainerFragment extends Fragment {
         this.btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editText.requestFocus();
+                editText.clearFocus();
             }
         });
 

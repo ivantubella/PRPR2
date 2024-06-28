@@ -80,7 +80,6 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                android:src="@tools:sample/avatars"
                 app:srcCompat="@drawable/poke_ball" />
 
             <TextView
@@ -113,7 +112,6 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                android:src="@tools:sample/avatars"
                 app:srcCompat="@drawable/great_ball" />
 
             <TextView
@@ -146,7 +144,6 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                android:src="@tools:sample/avatars"
                 app:srcCompat="@drawable/ultra_ball" />
 
             <TextView
@@ -179,7 +176,6 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                android:src="@tools:sample/avatars"
                 app:srcCompat="@drawable/master_ball" />
 
             <TextView
@@ -216,7 +212,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCapturedPokemons" />
 
     <Button
         android:id="@+id/buttonSave"

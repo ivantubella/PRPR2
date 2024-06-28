@@ -62,7 +62,7 @@ public class PokeBallFragment extends Fragment{
         this.btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editText.requestFocus();
+                editText.clearFocus();
             }
         });
 

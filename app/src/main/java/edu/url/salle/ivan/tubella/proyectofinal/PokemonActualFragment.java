@@ -94,6 +94,7 @@ public class PokemonActualFragment extends Fragment {
             public void onResponse(Call<PokemonEvolutionChain> call, Response<PokemonEvolutionChain> response) {
                 if (response.isSuccessful()) {
 
+
                     PokemonEvolutionChain poemonEspecieLegendario = response.body();
 
                      List<String> nombres = poemonEspecieLegendario.return_names();
@@ -145,6 +146,11 @@ public class PokemonActualFragment extends Fragment {
             public void onResponse(Call<PoemonEspecieLegendario> call, Response<PoemonEspecieLegendario> response) {
                 if (response.isSuccessful()) {
                     PoemonEspecieLegendario poemonEspecieLegendario = response.body();
+
+                    //descripcion
+                    TextView textView = v.findViewById(R.id.descripcionpokemon);
+                    textView.setText(poemonEspecieLegendario.getFlavor_text_entries().get(0).getFlavor_text());
+
                     url = poemonEspecieLegendario.getEvolution_chain().getUrl();
                     legendary = poemonEspecieLegendario.isIs_legendary();
                     obtenerDatosevoluciones();
@@ -172,18 +178,78 @@ public class PokemonActualFragment extends Fragment {
                     StringBuilder a= new StringBuilder();
                     for (int i =0; i<tipo.size(); i++){
                         a.append(tipo.get(i).getType().getName()+"/");
+                        ImageView q;
+                        if (i==0){
+                             q =(ImageView) v.findViewById(R.id.imagetipo0);
+                        }else{
+                             q =(ImageView) v.findViewById(R.id.imagetipo1);
+                        }
+                        switch (tipo.get(i).getType().getName()) {
+                            case "normal":
+                                q.setImageResource(R.drawable.normal);
+                                break;
+                            case "fire":
+                                q.setImageResource(R.drawable.fire);
+                                break;
+                            case "water":
+                                q.setImageResource(R.drawable.water);
+                                break;
+                            case "electric":
+                                q.setImageResource(R.drawable.electric);
+                                break;
+                            case "grass":
+                                q.setImageResource(R.drawable.grass);
+                                break;
+                            case "ice":
+                                q.setImageResource(R.drawable.ice);
+                                break;
+                            case "fighting":
+                                q.setImageResource(R.drawable.fighting);
+                                break;
+                            case "poison":
+                                q.setImageResource(R.drawable.poison);
+                                break;
+                            case "ground":
+                                q.setImageResource(R.drawable.ground);
+                                break;
+                            case "flying":
+                                q.setImageResource(R.drawable.flying);
+                                break;
+                            case "psychic":
+                                q.setImageResource(R.drawable.psychic);
+                                break;
+                            case "bug":
+                                q.setImageResource(R.drawable.bug);
+                                break;
+                            case "rock":
+                                q.setImageResource(R.drawable.rock);
+                                break;
+                            case "ghost":
+                                q.setImageResource(R.drawable.ghost);
+                                break;
+                            case "dragon":
+                                q.setImageResource(R.drawable.dragon);
+                                break;
+                            case "dark":
+                                q.setImageResource(R.drawable.dark);
+                                break;
+                            case "steel":
+                                q.setImageResource(R.drawable.steel);
+                                break;
+                            case "fairy":
+                                q.setImageResource(R.drawable.fairy);
+                                break;
+                            default:
+                        }
                     }
                     String tipe = a.toString();
                     textView.setText(tipe);
-                    //descripcion
-                    int altura = pokemonRespuestaespecifico.getHeight();
-                    int peso = pokemonRespuestaespecifico.getWeight();
-                    textView = v.findViewById(R.id.descripcionpokemon);
-                    textView.setText("Altura:"+altura+"\nPeso:"+peso);
 
                     //abilidades
                     ArrayList<Abilidades> abilidades = pokemonRespuestaespecifico.getAbilities();
                     for (int i =0; i<abilidades.size(); i++){
+                        textView = v.findViewById(R.id.habilidadpokemon);
+                        textView.setText(abilidades.get(0).getAbilidad().getName());
                         Random random = new Random();
                         double probabilidad = random.nextDouble();
 
@@ -198,9 +264,11 @@ public class PokemonActualFragment extends Fragment {
                                 textView = v.findViewById(R.id.habilidadpokemon);
                                 textView.setText(abilidades.get(i).getAbilidad().getName());
                                 i=abilidades.size();
+
                             }
                         }
                     }
+
                     //stats
                     ArrayList<Stats> stats = pokemonRespuestaespecifico.getStats();
                     textView = v.findViewById(R.id.statspokemon);
