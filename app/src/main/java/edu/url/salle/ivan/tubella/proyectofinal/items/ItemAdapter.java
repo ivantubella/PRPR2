@@ -1,4 +1,4 @@
-package edu.url.salle.ivan.tubella.proyectofinal;
+package edu.url.salle.ivan.tubella.proyectofinal.items;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import edu.url.salle.ivan.tubella.proyectofinal.Trainer.Trainer;
+import edu.url.salle.ivan.tubella.proyectofinal.captura.Captura;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemHolder> {
     private ArrayList<String> lItems;

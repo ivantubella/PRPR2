@@ -1,7 +1,9 @@
-package edu.url.salle.ivan.tubella.proyectofinal;
+package edu.url.salle.ivan.tubella.proyectofinal.ListaPokedex;
 
-import android.content.Intent;
 import android.os.Bundle;
+
+import edu.url.salle.ivan.tubella.proyectofinal.detalles_pokemon.PokemonActualFragment;
+import edu.url.salle.ivan.tubella.proyectofinal.R;
 import edu.url.salle.ivan.tubella.proyectofinal.Trainer.Trainer;
 
 import androidx.annotation.NonNull;

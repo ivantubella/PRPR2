@@ -1,6 +1,9 @@
-package edu.url.salle.ivan.tubella.proyectofinal;
+package edu.url.salle.ivan.tubella.proyectofinal.detalles_pokemon;
 
-public class Type {
+import java.util.ArrayList;
+
+public class Abilidad {
+
     private String name;
 
     public String getName() {

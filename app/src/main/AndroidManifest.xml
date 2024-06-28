@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PokemonActualFragment"
+            android:name=".detalles_pokemon.PokemonActualFragment"
             android:exported="false">
         </activity>
     </application>

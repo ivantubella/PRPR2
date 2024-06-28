@@ -1,13 +1,9 @@
-package edu.url.salle.ivan.tubella.proyectofinal;
+package edu.url.salle.ivan.tubella.proyectofinal.detalles_pokemon;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,6 +25,8 @@ import edu.url.salle.ivan.tubella.proyectofinal.Evolucion_y_legendario.PedirDato
 import edu.url.salle.ivan.tubella.proyectofinal.Evolucion_y_legendario.PedirDatosPokemonEspecificosEspecieChain;
 import edu.url.salle.ivan.tubella.proyectofinal.Evolucion_y_legendario.PoemonEspecieLegendario;
 import edu.url.salle.ivan.tubella.proyectofinal.Evolucion_y_legendario.PokemonEvolutionChain;
+import edu.url.salle.ivan.tubella.proyectofinal.items.ItemAdapter;
+import edu.url.salle.ivan.tubella.proyectofinal.R;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

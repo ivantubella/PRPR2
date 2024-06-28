@@ -1,6 +1,4 @@
-package edu.url.salle.ivan.tubella.proyectofinal;
-
-import java.util.ArrayList;
+package edu.url.salle.ivan.tubella.proyectofinal.detalles_pokemon;
 
 public class Abilidades {
 

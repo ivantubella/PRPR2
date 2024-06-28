@@ -1,4 +1,4 @@
-package edu.url.salle.ivan.tubella.proyectofinal;
+package edu.url.salle.ivan.tubella.proyectofinal.Trainer;
 
 import android.os.Bundle;
 
@@ -15,7 +15,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import edu.url.salle.ivan.tubella.proyectofinal.Trainer.Trainer;
+
+import edu.url.salle.ivan.tubella.proyectofinal.items.ItemAdapter;
+import edu.url.salle.ivan.tubella.proyectofinal.R;
+import edu.url.salle.ivan.tubella.proyectofinal.captura.Captura;
+import edu.url.salle.ivan.tubella.proyectofinal.captura.CapturaAdapter;
 
 public class TrainerFragment extends Fragment {
     private Trainer trainer;

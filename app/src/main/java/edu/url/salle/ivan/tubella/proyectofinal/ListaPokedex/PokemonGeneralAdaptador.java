@@ -1,11 +1,11 @@
-package edu.url.salle.ivan.tubella.proyectofinal;
+package edu.url.salle.ivan.tubella.proyectofinal.ListaPokedex;
 
-import static androidx.core.app.ActivityCompat.startActivityForResult;
-import static androidx.core.content.ContextCompat.startActivity;
+import edu.url.salle.ivan.tubella.proyectofinal.detalles_pokemon.PokemonActualFragment;
+import edu.url.salle.ivan.tubella.proyectofinal.R;
 import edu.url.salle.ivan.tubella.proyectofinal.Trainer.Trainer;
+import edu.url.salle.ivan.tubella.proyectofinal.captura.Captura;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

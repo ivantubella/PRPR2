@@ -1,4 +1,4 @@
-package edu.url.salle.ivan.tubella.proyectofinal;
+package edu.url.salle.ivan.tubella.proyectofinal.detalles_pokemon;
 
 public class Stats {
 

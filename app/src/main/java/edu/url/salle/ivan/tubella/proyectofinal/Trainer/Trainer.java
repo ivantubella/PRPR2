@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 
-import edu.url.salle.ivan.tubella.proyectofinal.Captura;
+import edu.url.salle.ivan.tubella.proyectofinal.captura.Captura;
 
 public class Trainer implements Parcelable {
     private static Trainer sTrainer;

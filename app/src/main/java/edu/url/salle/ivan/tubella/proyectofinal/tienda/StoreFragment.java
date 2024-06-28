@@ -1,4 +1,4 @@
-package edu.url.salle.ivan.tubella.proyectofinal;
+package edu.url.salle.ivan.tubella.proyectofinal.tienda;
 
 import android.os.Bundle;
 
@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import edu.url.salle.ivan.tubella.proyectofinal.R;
 import edu.url.salle.ivan.tubella.proyectofinal.Trainer.Trainer;
 
 public class StoreFragment extends Fragment {

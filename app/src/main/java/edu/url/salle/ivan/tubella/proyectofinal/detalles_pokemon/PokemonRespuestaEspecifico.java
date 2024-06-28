@@ -1,6 +1,8 @@
-package edu.url.salle.ivan.tubella.proyectofinal;
+package edu.url.salle.ivan.tubella.proyectofinal.detalles_pokemon;
 
 import java.util.ArrayList;
+
+import edu.url.salle.ivan.tubella.proyectofinal.ListaPokedex.Sprites;
 
 public class PokemonRespuestaEspecifico {
 

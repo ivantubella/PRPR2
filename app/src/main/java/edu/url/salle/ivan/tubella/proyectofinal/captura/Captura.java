@@ -1,4 +1,4 @@
-package edu.url.salle.ivan.tubella.proyectofinal;
+package edu.url.salle.ivan.tubella.proyectofinal.captura;
 
 import android.os.Parcel;
 import android.os.Parcelable;
